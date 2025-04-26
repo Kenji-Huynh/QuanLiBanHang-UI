@@ -1,0 +1,393 @@
+/* Desktop-first approach - Responsive design */
+
+/* ==== TABLETS (992px and below) ==== */
+@media (max-width: 992px) {
+  /* General */
+  .container {
+    padding: 0 20px;
+  }
+
+  h1 {
+    font-size: 2.5rem;
+  }
+
+  h2 {
+    font-size: 2rem;
+  }
+
+  /* Header */
+  .header-wrapper {
+    flex-direction: column;
+    gap: 15px;
+  }
+
+  .contact-info {
+    justify-content: center;
+  }
+
+  /* Hero Section */
+  .hero-content {
+    width: 80%;
+  }
+
+  .hero-title {
+    font-size: 2.5rem;
+  }
+
+  /* Features Section */
+  .features-wrapper {
+    flex-direction: column;
+  }
+
+  .feature-card {
+    flex: 0 0 100%;
+    max-width: 600px;
+    margin: 0 auto 30px;
+  }
+
+  /* Testimonials */
+  .testimonials-wrapper {
+    flex-direction: column;
+    align-items: center;
+  }
+
+  .testimonial-card {
+    max-width: 500px;
+    margin-bottom: 30px;
+  }
+
+  /* Portfolio */
+  .portfolio-content {
+    flex-direction: column;
+  }
+
+  .portfolio-left {
+    flex: 0 0 100%;
+    max-width: 100%;
+    margin-bottom: 40px;
+    text-align: center;
+  }
+
+  .portfolio-right {
+    flex: 0 0 100%;
+    max-width: 100%;
+  }
+
+  .portfolio-grid {
+    grid-template-columns: repeat(2, 1fr); /* Giữ nguyên 2 cột ở tablet */
+    gap: 15px;
+  }
+
+  .accent-line {
+    margin: 15px auto;
+  }
+
+  /* CTA Section */
+  .cta-title {
+    font-size: 2.2rem;
+  }
+
+  /* Stats Section */
+  .stats-container {
+    gap: 30px;
+  }
+
+  .stat-number,
+  .stat-plus {
+    font-size: 3rem;
+  }
+
+  .stat-label {
+    font-size: 1rem;
+  }
+
+  /* Footer */
+  .footer-main {
+    flex-direction: column;
+    gap: 40px;
+  }
+
+  .footer-left,
+  .footer-right {
+    flex: 0 0 100%;
+    max-width: 600px;
+    align-items: center;
+    text-align: center;
+  }
+
+  .footer-contact-item {
+    align-items: center;
+  }
+
+  .footer-social {
+    justify-content: center;
+  }
+}
+
+/* ==== MOBILE LANDSCAPE (768px and below) ==== */
+@media (max-width: 768px) {
+  /* General */
+  .container {
+    padding: 0 15px;
+  }
+
+  h1 {
+    font-size: 2.2rem;
+  }
+
+  h2 {
+    font-size: 1.8rem;
+  }
+
+  /* Header */
+  .logo img {
+    max-width: 120px;
+  }
+
+  .contact-info {
+    flex-direction: column;
+    gap: 10px;
+  }
+
+  /* Hero Section */
+  .hero-content {
+    width: 100%;
+    padding: 0 20px;
+  }
+
+  .hero-title {
+    font-size: 2.2rem;
+  }
+
+  .hero-subtitle {
+    font-size: 1rem;
+  }
+
+  /* Features */
+  .feature-icon {
+    width: 60px;
+    height: 60px;
+  }
+
+  /* CTA Section */
+  .cta-section {
+    padding: 80px 0;
+  }
+
+  .cta-title {
+    font-size: 2rem;
+  }
+
+  .cta-description {
+    font-size: 1rem;
+  }
+
+  .btn-cta {
+    padding: 12px 30px;
+  }
+
+  /* Portfolio */
+  .portfolio-grid {
+    grid-template-columns: repeat(2, 1fr); /* 2 cột ở mobile landscape */
+    gap: 10px;
+  }
+
+  .portfolio-item {
+    margin-bottom: 10px;
+  }
+
+  /* Stats Section */
+  .stats-section {
+    padding: 60px 0;
+  }
+
+  .stats-container {
+    flex-direction: column;
+    align-items: center;
+  }
+
+  .stat-item {
+    min-width: 80%;
+    margin-bottom: 40px;
+  }
+
+  .stat-item:last-child {
+    margin-bottom: 0;
+  }
+
+  /* Footer */
+  .footer {
+    padding: 50px 0 20px;
+  }
+
+  .footer-subscribe-title {
+    font-size: 0.95rem;
+  }
+}
+
+/* ==== MOBILE PORTRAIT (576px and below) ==== */
+@media (max-width: 576px) {
+  /* General */
+  h1 {
+    font-size: 2rem;
+  }
+
+  h2 {
+    font-size: 1.6rem;
+  }
+
+  p {
+    font-size: 0.95rem;
+  }
+
+  /* Hero Section */
+  .hero {
+    padding: 100px 0;
+  }
+
+  .hero-title {
+    font-size: 1.8rem;
+  }
+
+  .hero-description {
+    font-size: 0.95rem;
+    margin-bottom: 25px;
+  }
+
+  .btn-primary {
+    padding: 10px 25px;
+    font-size: 0.9rem;
+  }
+
+  /* Testimonials */
+  .testimonials-title {
+    font-size: 1.8rem;
+  }
+
+  .testimonials-subtitle {
+    font-size: 0.95rem;
+    margin-bottom: 30px;
+  }
+
+  .customer-avatar {
+    width: 80px;
+    height: 80px;
+    margin-bottom: 15px;
+  }
+
+  .customer-name {
+    font-size: 1.2rem;
+  }
+
+  /* CTA Section */
+  .cta-section {
+    padding: 60px 0;
+  }
+
+  .cta-title {
+    font-size: 1.8rem;
+    margin-bottom: 20px;
+  }
+
+  .cta-description {
+    margin-bottom: 30px;
+  }
+
+  /* Portfolio */
+  .portfolio-grid {
+    grid-template-columns: 1fr; /* 1 cột ở mobile portrait */
+  }
+
+  .portfolio-image-wrapper {
+    max-width: 100%;
+    margin: 0 auto;
+  }
+
+  .portfolio-image {
+    width: 100%;
+    height: auto;
+    object-fit: cover;
+  }
+
+  /* Stats Section */
+  .stat-number,
+  .stat-plus {
+    font-size: 2.5rem;
+  }
+
+  .stat-label {
+    font-size: 0.9rem;
+  }
+
+  /* Footer */
+  .footer {
+    padding: 40px 0 20px;
+  }
+
+  .footer-logo img {
+    width: 100px;
+  }
+
+  .footer-contact-item {
+    flex-direction: column;
+  }
+
+  .footer-label {
+    margin-bottom: 5px;
+  }
+
+  .footer-info {
+    font-size: 0.9rem;
+  }
+
+  .footer-subscribe-title {
+    font-size: 0.9rem;
+  }
+
+  .footer-input {
+    padding: 10px;
+    font-size: 0.85rem;
+  }
+
+  .social-icon img {
+    width: 20px;
+    height: 20px;
+  }
+
+  .copyright {
+    font-size: 0.8rem;
+  }
+}
+
+/* ==== SMALL SCREENS (400px and below) ==== */
+@media (max-width: 400px) {
+  /* General adjustments for very small screens */
+  h1 {
+    font-size: 1.8rem;
+  }
+
+  h2 {
+    font-size: 1.5rem;
+  }
+
+  /* Hero Section */
+  .hero-title {
+    font-size: 1.6rem;
+  }
+
+  /* CTA */
+  .btn-cta {
+    padding: 10px 20px;
+    font-size: 0.85rem;
+  }
+
+  /* Stats */
+  .stat-wrapper {
+    height: auto;
+  }
+
+  .stat-number,
+  .stat-plus {
+    font-size: 2.2rem;
+  }
+}

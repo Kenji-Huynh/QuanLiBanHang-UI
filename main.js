@@ -1,0 +1,243 @@
+// Counter animation for Stats Section - Modified for continuous counting effect
+function startCountAnimation() {
+  const statNumbers = document.querySelectorAll(".stat-number");
+
+  statNumbers.forEach((element) => {
+    const max = parseInt(element.getAttribute("data-count"));
+    const min =
+      parseInt(element.getAttribute("data-min")) || Math.floor(max * 0.9); // Nếu không có data-min, lấy 90% giá trị tối đa
+    let current = min;
+    element.textContent = current;
+
+    // Tạo hiệu ứng tăng dần liên tục
+    function updateCounter() {
+      // Tính toán số lượng tăng mỗi lần
+      let increment;
+      const range = max - min;
+
+      if (max > 1000) {
+        increment = Math.ceil(range / 50); // Tăng nhanh hơn với số lớn
+      } else if (max > 100) {
+        increment = Math.ceil(range / 30);
+      } else {
+        increment = 1;
+      }
+
+      // Tăng số lên
+      current += increment;
+
+      // Nếu đạt tới giá trị tối đa, reset về giá trị tối thiểu
+      if (current >= max) {
+        current = min;
+      }
+
+      // Cập nhật hiển thị
+      element.textContent = current;
+
+      // Thiết lập độ trễ ngẫu nhiên để tạo cảm giác tự nhiên
+      const delay = Math.random() * 200 + 100;
+      setTimeout(updateCounter, delay);
+    }
+
+    // Bắt đầu cập nhật counter với độ trễ ngẫu nhiên
+    const initialDelay = Math.random() * 500;
+    setTimeout(updateCounter, initialDelay);
+  });
+}
+
+// Khởi động animation khi trang tải xong
+document.addEventListener("DOMContentLoaded", function () {
+  console.log("Document loaded and ready");
+
+  // Hero section animations
+  const heroTitle = document.querySelector(".hero-title");
+  const heroDescription = document.querySelector(".hero-description");
+  const heroCta = document.querySelector(".hero-cta");
+
+  // Simple fade-in animation
+  setTimeout(() => {
+    if (heroTitle) heroTitle.style.opacity = "1";
+  }, 300);
+
+  setTimeout(() => {
+    if (heroDescription) heroDescription.style.opacity = "1";
+  }, 600);
+
+  setTimeout(() => {
+    if (heroCta) heroCta.style.opacity = "1";
+  }, 900);
+
+  // Improved feature card hover effects
+  const featureCards = document.querySelectorAll(".feature-card");
+
+  // Đặt z-index ban đầu dựa trên thứ tự hiển thị
+  featureCards.forEach((card, index) => {
+    // Feature đầu tiên nằm dưới
+    card.style.zIndex = featureCards.length - index;
+  });
+
+  featureCards.forEach((card, index) => {
+    // Lưu trạng thái hover để tránh trigger nhiều lần
+    let isHovered = false;
+
+    card.addEventListener("mouseenter", () => {
+      if (isHovered) return;
+      isHovered = true;
+
+      // Đưa card hiện tại lên trên cùng và đẩy z-index cao hơn nhiều
+      card.style.zIndex = 100;
+
+      // Thêm class để xử lý hiệu ứng CSS
+      card.classList.add("hovered");
+
+      // Đảm bảo các card khác có z-index thấp hơn
+      featureCards.forEach((otherCard, otherIndex) => {
+        if (otherIndex !== index) {
+          otherCard.style.zIndex = featureCards.length - otherIndex;
+          // Đảm bảo không có card nào khác đang được hover
+          otherCard.classList.remove("hovered");
+        }
+      });
+    });
+
+    card.addEventListener("mouseleave", () => {
+      // Đặt lại trạng thái
+      isHovered = false;
+
+      // Xóa class hover
+      card.classList.remove("hovered");
+
+      // Delay việc thay đổi z-index để hoàn thành transition mượt mà
+      setTimeout(() => {
+        // Chỉ reset z-index nếu không còn hover
+        if (!isHovered) {
+          card.style.zIndex = featureCards.length - index;
+        }
+      }, 600); // Thời gian chờ phải tương đương hoặc lớn hơn thời gian transition
+    });
+  });
+
+  // Auto hover cho feature thứ 2 (index 1) sau khi trang tải xong
+  setTimeout(() => {
+    if (featureCards.length > 1) {
+      const secondFeature = featureCards[1]; // Lấy feature thứ 2 (index 1)
+
+      // Kích hoạt hiệu ứng hover
+      secondFeature.style.zIndex = 100;
+      secondFeature.classList.add("hovered");
+
+      // Đánh dấu là đã hover (nếu sử dụng biến isHovered)
+      if (secondFeature._hoverHandler) {
+        secondFeature._isHovered = true;
+      }
+
+      // Đảm bảo các card khác có z-index thấp hơn
+      featureCards.forEach((otherCard, otherIndex) => {
+        if (otherIndex !== 1) {
+          otherCard.style.zIndex = featureCards.length - otherIndex;
+        }
+      });
+    }
+  }, 1200); // Chờ sau hero animation một chút
+
+  // Hiệu ứng hover cho các card nhỏ trong feature 3
+  const smallCards = document.querySelectorAll(".feature-small-card");
+
+  smallCards.forEach((card) => {
+    card.addEventListener("mouseenter", () => {
+      // Các hiệu ứng đã được xử lý bằng CSS
+    });
+  });
+
+  // Reset auto hover cho feature 2 sau một thời gian
+  setTimeout(() => {
+    const secondFeature = document.querySelector(".feature-social");
+    if (secondFeature && secondFeature.classList.contains("hovered")) {
+      secondFeature.classList.remove("hovered");
+
+      // Reset z-index về ban đầu
+      setTimeout(() => {
+        featureCards.forEach((card, index) => {
+          card.style.zIndex = featureCards.length - index;
+        });
+      }, 600);
+    }
+  }, 5000); // Auto hover feature 2 trong 5 giây rồi trả về trạng thái bình thường
+
+  // Hiệu ứng hover cho portfolio items
+  const portfolioItems = document.querySelectorAll(".portfolio-item");
+
+  portfolioItems.forEach((item) => {
+    item.addEventListener("mouseenter", function () {
+      const defaultImage = this.querySelector(".default-image");
+      const hoverImage = this.querySelector(".hover-image");
+
+      defaultImage.style.transition = "opacity 0.5s ease";
+      hoverImage.style.transition = "opacity 0.5s ease";
+
+      defaultImage.style.opacity = "0";
+      hoverImage.style.opacity = "1";
+    });
+
+    item.addEventListener("mouseleave", function () {
+      const defaultImage = this.querySelector(".default-image");
+      const hoverImage = this.querySelector(".hover-image");
+
+      defaultImage.style.opacity = "1";
+      hoverImage.style.opacity = "0";
+    });
+  });
+
+  // Animation effects for CTA button
+  const ctaButton = document.querySelector(".btn-cta");
+
+  if (ctaButton) {
+    ctaButton.addEventListener("mouseenter", () => {
+      const animatedLine = document.querySelector(".btn-animated-line");
+      if (animatedLine) {
+        animatedLine.style.animationDuration = "1s";
+      }
+    });
+
+    ctaButton.addEventListener("mouseleave", () => {
+      const animatedLine = document.querySelector(".btn-animated-line");
+      if (animatedLine) {
+        animatedLine.style.animationDuration = "2s";
+      }
+    });
+  }
+
+  // Gọi hàm animation cho stats
+  startCountAnimation();
+});
+
+// Thêm vào file main.js
+document.addEventListener("DOMContentLoaded", function () {
+  // Xử lý cuộn ngang cho portfolio trên mobile
+  const portfolioGrid = document.querySelector(".portfolio-grid");
+
+  if (portfolioGrid && window.innerWidth <= 768) {
+    // Thêm chỉ báo cuộn
+    const portfolioRight = document.querySelector(".portfolio-right");
+    if (portfolioRight) {
+      const scrollIndicator = document.createElement("div");
+      scrollIndicator.className = "scroll-indicator";
+      scrollIndicator.textContent = "Vuốt sang để xem thêm";
+      scrollIndicator.style.textAlign = "center";
+      scrollIndicator.style.fontSize = "0.8rem";
+      scrollIndicator.style.color = "#777";
+      scrollIndicator.style.paddingTop = "10px";
+      portfolioRight.appendChild(scrollIndicator);
+
+      // Ẩn chỉ báo sau khi người dùng đã cuộn
+      portfolioGrid.addEventListener(
+        "scroll",
+        function () {
+          scrollIndicator.style.opacity = "0";
+          scrollIndicator.style.transition = "opacity 0.5s ease";
+        },
+        { once: true }
+      );
+    }
+  }
+});

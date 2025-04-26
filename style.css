@@ -1,0 +1,955 @@
+:root {
+  --primary-color: #ff4d00;
+  --text-color: #ffffff;
+  --dark-text: #333333;
+  --light-bg: #f5f5f5;
+  --card-bg: #ffffff;
+  --background-overlay: rgba(0, 0, 0, 0.5);
+  --transition-speed: 0.4s;
+  --transition-expand: 0.6s; /* Thời gian transition cho hiệu ứng mở rộng */
+}
+
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+body {
+  font-family: "Roboto", sans-serif;
+  line-height: 1.6;
+  color: var(--dark-text);
+  background-color: white;
+}
+
+p {
+  color: #777777;
+}
+
+.container {
+  width: 100%;
+  max-width: 1200px;
+  margin: 0 auto;
+  padding: 0 15px;
+}
+
+/* Header Styles */
+.header {
+  background-color: transparent;
+  position: absolute;
+  width: 100%;
+  z-index: 100;
+  padding: 20px 0;
+}
+
+.header-wrapper {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.logo img {
+  height: 40px;
+}
+
+.contact-info {
+  display: flex;
+  gap: 30px;
+}
+
+.phone,
+.hours {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  color: var(--text-color);
+}
+
+.phone img,
+.hours img {
+  width: 20px;
+  height: 20px;
+}
+
+/* Hero Section */
+.hero {
+  background-image: url("img/header-bg-pic.png");
+  background-size: cover;
+  background-position: center;
+  background-repeat: no-repeat;
+  position: relative;
+  height: 100vh;
+  display: flex;
+  align-items: center;
+}
+
+.hero::before {
+  content: "";
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background-color: var(--background-overlay);
+}
+
+.hero-content {
+  position: relative;
+  z-index: 2;
+  text-align: center;
+  max-width: 800px;
+  margin: 0 auto;
+  padding: 20px;
+}
+
+.hero-title {
+  font-size: 3rem;
+  font-weight: 700;
+  color: var(--text-color);
+  margin-bottom: 20px;
+  line-height: 1.2;
+  text-transform: uppercase;
+  opacity: 0;
+  transition: opacity 0.5s ease;
+}
+
+.hero-description {
+  font-size: 1.1rem;
+  color: var(--text-color);
+  margin-bottom: 30px;
+  max-width: 700px;
+  margin-left: auto;
+  margin-right: auto;
+  opacity: 0;
+  transition: opacity 0.5s ease;
+}
+
+.hero-cta {
+  opacity: 0;
+  transition: opacity 0.5s ease;
+}
+
+.btn {
+  display: inline-block;
+  padding: 10px 30px;
+  border-radius: 50px;
+  text-decoration: none;
+  font-weight: 500;
+  letter-spacing: 1px;
+  text-transform: uppercase;
+  transition: all 0.3s ease;
+  font-family: "Crimson Text", serif;
+}
+
+.btn-primary {
+  background-color: var(--primary-color);
+  color: var(--text-color);
+}
+
+.btn-primary:hover {
+  background-color: #ff6a33;
+}
+
+/* Features section - cải thiện để sử dụng toàn bộ chiều rộng */
+.features {
+  background-color: white;
+  overflow: hidden;
+  position: relative;
+  width: 100%;
+}
+
+/* Container mở rộng toàn màn hình cho feature sections */
+.features .container {
+  max-width: 100%;
+  padding: 0; /* Xóa padding để sử dụng toàn bộ chiều rộng */
+}
+
+.features-wrapper {
+  display: flex;
+  flex-direction: column;
+  gap: 0;
+  width: 100%;
+}
+
+.feature-card {
+  display: flex;
+  align-items: center;
+  background-color: white;
+  border-radius: 0;
+  overflow: hidden;
+  transition: all var(--transition-expand) cubic-bezier(0.33, 1, 0.68, 1);
+  position: relative;
+  padding: 0;
+  min-height: 360px; /* Giảm từ 380px xuống 360px */
+  margin-bottom: -30px; /* Giảm từ -50px lên -30px */
+  width: 100%;
+  box-shadow: 0 0 0 rgba(0, 0, 0, 0); /* Shadow ban đầu (không có) */
+}
+
+.feature-card.hovered {
+  box-shadow: 0 15px 15px -15px rgba(0, 0, 0, 0.5),
+    0 -15px 15px -15px rgba(0, 0, 0, 0.5);
+}
+
+/* Cải thiện hiệu ứng hover cho feature image */
+.feature-image {
+  flex: 0 0 50%;
+  position: relative;
+  overflow: hidden;
+  min-height: 360px; /* Giảm từ 380px xuống 360px */
+  max-height: 360px; /* Giảm từ 380px xuống 360px */
+  transition: max-height var(--transition-expand) cubic-bezier(0.33, 1, 0.68, 1);
+  display: flex;
+  justify-content: center;
+}
+
+.feature-image img {
+  height: 100%;
+  width: auto;
+  max-width: 100%;
+  object-fit: contain;
+  transition: var(--transition-expand) cubic-bezier(0.33, 1, 0.68, 1);
+  /* Loại bỏ transform khi hover */
+}
+
+/* Animate khi hover - chỉ thay đổi max-height */
+.feature-card.hovered .feature-image {
+  max-height: 430px; /* Giảm từ 450px xuống 430px */
+}
+
+/* Loại bỏ animation di chuyển hình ảnh lên trên */
+.feature-card.hovered .feature-image img {
+  /* Loại bỏ transform */
+  transform: none;
+}
+
+.feature-content {
+  flex: 0 0 50%; /* Giữ nội dung chiếm khoảng 50% */
+  padding: 60px 8%; /* Sử dụng % để đảm bảo căn đều trên các kích thước màn hình */
+  z-index: 2;
+  max-width: 700px; /* Giới hạn chiều rộng để text dễ đọc */
+}
+
+/* Giảm padding-bottom của feature 1 để không bị khoảng trống quá nhiều */
+.feature-card:first-child {
+  padding-bottom: 40px; /* Giảm từ 70px xuống 40px */
+  justify-content: flex-end;
+}
+
+.feature-card:first-child .feature-content {
+  margin-right: 0;
+  margin-left: auto;
+  padding-right: 8%; /* Đảm bảo padding phải thống nhất */
+}
+
+.feature-card:first-child .feature-image {
+  justify-content: flex-start; /* Hình ảnh căn lề trái */
+  padding-right: 8%; /* Thêm padding bên trái tương đương với padding bên phải của content */
+}
+
+/* Feature 2 specific styling - social media feature */
+.feature-social {
+  background-color: #f5f5f5; /* Thay đổi từ white sang #F5F5F5 */
+  margin-top: -70px; /* Tăng từ -100px lên -70px để giảm chồng lấp */
+  justify-content: flex-start; /* Đẩy nội dung về phía trái */
+}
+
+.feature-social .feature-content {
+  margin-left: 0;
+  margin-right: auto;
+}
+
+.feature-social .feature-image {
+  justify-content: flex-end; /* Hình ảnh căn lề phải */
+}
+
+.feature-social .feature-image img {
+  max-height: 100%;
+  width: auto;
+  max-width: 100%;
+  object-fit: contain;
+}
+
+/* Feature 3 - Cards Grid */
+.feature-cards-grid {
+  background-color: white;
+  margin-top: -70px; /* Đè lên feature 2 một chút */
+  padding: 80px 0 60px;
+  flex-direction: column !important;
+  align-items: center;
+  justify-content: center;
+}
+
+.feature-grid-content {
+  width: 100%;
+  max-width: 1200px;
+  padding: 0 15px;
+}
+
+.cards-wrapper {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+  gap: 40px;
+  margin-top: 20px;
+}
+
+.feature-small-card {
+  flex: 0 0 calc(25% - 40px);
+  max-width: 270px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  text-align: center;
+  padding: 20px 15px;
+  transition: transform 0.4s ease;
+  cursor: pointer;
+}
+
+.feature-small-card:hover {
+  transform: translateY(-5px);
+}
+
+/* Icon styling */
+.card-icon-wrapper {
+  position: relative;
+  width: 80px;
+  height: 80px;
+  margin-bottom: 20px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.icon-background {
+  position: absolute;
+  width: 100%;
+  height: 100%;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  opacity: 0;
+  transition: opacity var(--transition-expand) cubic-bezier(0.33, 1, 0.68, 1);
+  z-index: 1;
+}
+
+.icon-bg {
+  width: 100%;
+  height: 100%;
+  object-fit: contain;
+}
+
+.feature-icon {
+  width: 50px;
+  height: 50px;
+  z-index: 2;
+  transition: transform var(--transition-expand) cubic-bezier(0.33, 1, 0.68, 1);
+}
+
+/* Description styling */
+.card-description {
+  margin-top: 10px;
+}
+
+.card-description p {
+  font-size: 0.95rem;
+  color: #666;
+  transition: all var(--transition-expand) cubic-bezier(0.33, 1, 0.68, 1);
+}
+
+/* Hover effects */
+.feature-small-card:hover .feature-icon {
+  transform: rotate(720deg); /* 2 vòng = 720 độ */
+}
+
+.feature-small-card:hover .icon-background {
+  opacity: 1;
+}
+
+.feature-small-card:hover .card-description p {
+  font-weight: 500;
+  color: var(--dark-text);
+}
+
+/* Hover effect cho toàn bộ feature 3 */
+.feature-cards-grid.hovered {
+  box-shadow: 0 15px 15px -15px rgba(0, 0, 0, 0.5),
+    0 -15px 15px -15px rgba(0, 0, 0, 0.5);
+  background-color: white; /* Giữ nguyên màu trắng không đổi */
+}
+
+/* Feature titles */
+.feature-title {
+  color: var(--primary-color);
+  font-size: 2rem;
+  margin-bottom: 20px;
+  position: relative;
+  font-family: "Crimson Text", serif;
+}
+
+/* Additional helper classes */
+.text-center {
+  text-align: center;
+}
+
+/* Testimonials section */
+.testimonials {
+  width: 100%;
+  background-color: #111;
+  color: white;
+  padding: 80px 0;
+  position: relative;
+  overflow: hidden;
+  z-index: 1;
+}
+
+/* Pattern background */
+.testimonials::before {
+  content: "";
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background-image: url("img/customer-bg.png"); /* Nếu có hình nền pattern như trong mẫu */
+  background-size: contain;
+  z-index: -1;
+}
+
+.testimonials-content {
+  max-width: 1200px;
+  margin: 0 auto;
+  padding: 0 15px;
+  text-align: center;
+}
+
+.testimonials-title {
+  font-size: 2.5rem;
+  font-weight: 700;
+  margin-bottom: 15px;
+  color: white;
+}
+
+.testimonials-subtitle {
+  font-size: 1.1rem;
+  color: #ccc;
+  margin-bottom: 60px;
+  max-width: 700px;
+  margin-left: auto;
+  margin-right: auto;
+}
+
+.testimonials-wrapper {
+  display: flex;
+  justify-content: center;
+  gap: 30px;
+  flex-wrap: wrap;
+}
+
+.testimonial-card {
+  flex: 1;
+  max-width: 350px;
+  min-width: 280px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  text-align: center;
+  padding: 20px 15px;
+  transition: transform 0.3s ease;
+}
+
+.testimonial-card:hover {
+  transform: translateY(-10px);
+}
+
+.customer-avatar {
+  width: 120px;
+  height: 120px;
+  border-radius: 50%;
+  overflow: hidden;
+  margin-bottom: 20px;
+  border: 4px solid rgba(255, 255, 255, 0.1);
+}
+
+.customer-avatar img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+}
+
+.customer-name {
+  font-size: 1.5rem;
+  font-weight: 500;
+  margin-bottom: 5px;
+  color: white;
+}
+
+.customer-company {
+  font-size: 0.9rem;
+  color: #999;
+  margin-bottom: 20px;
+}
+
+.testimonial-text {
+  color: #eee;
+  line-height: 1.6;
+  font-size: 1rem;
+}
+
+/* Portfolio Section */
+.portfolio {
+  width: 100%;
+  padding: 80px 0;
+  background-color: white;
+  position: relative;
+}
+
+.portfolio-content {
+  max-width: 1200px;
+  margin: 0 auto;
+  padding: 0 15px;
+  display: flex;
+  flex-direction: row;
+  align-items: flex-start;
+  gap: 40px;
+}
+
+.portfolio-left {
+  flex: 0 0 45%;
+  max-width: 45%;
+}
+
+.portfolio-title {
+  font-size: 2.5rem;
+  color: var(--primary-color);
+  text-align: left;
+  margin-bottom: 20px;
+  font-family: "Crimson Text", serif;
+}
+
+/* Accent line */
+.accent-line {
+  width: 50px;
+  height: 3px;
+  background-color: var(--primary-color);
+  margin-bottom: 25px;
+}
+
+.portfolio-description {
+  color: var(--dark-text);
+  line-height: 1.7;
+  text-align: left;
+}
+
+.portfolio-right {
+  flex: 0 0 50%;
+}
+
+.portfolio-grid {
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  grid-template-rows: repeat(2, 1fr);
+  gap: 20px;
+}
+
+.portfolio-item {
+  position: relative;
+  overflow: hidden;
+  border-radius: 4px;
+  box-shadow: 0 5px 15px rgba(0, 0, 0, 0.1);
+  transition: transform 0.3s ease, box-shadow 0.3s ease;
+  cursor: pointer;
+}
+
+.portfolio-item:hover {
+  transform: translateY(-5px);
+  box-shadow: 0 10px 20px rgba(0, 0, 0, 0.15);
+}
+
+.portfolio-image-wrapper {
+  position: relative;
+  width: 100%;
+  height: 0;
+  padding-bottom: 75%; /* Tỉ lệ khung hình 4:3 */
+  overflow: hidden;
+}
+
+.portfolio-image {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  transition: opacity 0.5s ease;
+}
+
+.default-image {
+  opacity: 1;
+}
+
+.hover-image {
+  opacity: 0;
+}
+
+.portfolio-item:hover .default-image {
+  opacity: 0;
+}
+
+.portfolio-item:hover .hover-image {
+  opacity: 1;
+}
+
+/* Call To Action Section */
+.cta-section {
+  width: 100%;
+  padding: 120px 0;
+  background-image: url("img/thamgia-bg.png");
+  background-size: cover;
+  background-position: center;
+  background-attachment: fixed;
+  position: relative;
+  text-align: center;
+  overflow: hidden;
+}
+
+/* Điều chỉnh overlay để nhìn thấy pattern rõ hơn */
+.cta-overlay {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background-color: rgba(
+    0,
+    0,
+    0,
+    0
+  ); /* Giảm độ đậm của overlay từ 0.7 xuống 0.5 */
+  z-index: 1;
+}
+
+.cta-content {
+  position: relative;
+  z-index: 2;
+  max-width: 800px;
+  margin: 0 auto;
+  padding: 0 20px;
+}
+
+.cta-title {
+  font-size: 2.8rem;
+  color: var(--primary-color);
+  margin-bottom: 30px;
+  font-family: "Crimson Text", serif;
+  text-align: center;
+  font-weight: lighter;
+}
+
+.cta-description {
+  font-size: 1.1rem;
+  color: #777777;
+  margin-bottom: 50px;
+  line-height: 1.7;
+}
+
+/* Button container with animated line */
+.cta-button-container {
+  position: relative;
+  display: inline-block;
+}
+
+.btn-cta {
+  background-color: #3949ab; /* Đã thay đổi từ primary-color sang #3949AB */
+  color: white;
+  font-size: 1rem;
+  font-weight: 700;
+  padding: 15px 40px;
+  border-radius: 5px;
+  text-decoration: none;
+  text-transform: uppercase;
+  letter-spacing: 1px;
+  transition: all 0.5s ease;
+  position: relative;
+  z-index: 2;
+  display: inline-block;
+}
+
+.btn-cta:hover {
+  background-color: white; /* Đã thay đổi hover color để phù hợp với màu mới */
+  transform: translateY(-3px);
+  box-shadow: 0 5px 15px rgba(0, 0, 0, 0.2);
+  color: #3949ab;
+  border: 2px solid #3949ab; /* Thêm border để nổi bật hơn */
+}
+
+/* Animated line under button */
+.btn-animated-line {
+  position: absolute;
+  bottom: -10px;
+  left: 0;
+  width: 100%;
+  height: 2px;
+  background: linear-gradient(90deg, transparent, #3949ab, transparent);
+  animation: line-animation 2s infinite;
+}
+
+@keyframes line-animation {
+  0% {
+    transform: translateX(-100%);
+  }
+  50% {
+    transform: translateX(100%);
+  }
+  100% {
+    transform: translateX(-100%);
+  }
+}
+
+/* Stats Section */
+.stats-section {
+  width: 100%;
+  padding: 80px 0;
+  background-color: #000; /* Nền đen */
+  background-image: url("img/customer-bg.png"); /* Pattern của bạn */
+  background-size: cover;
+  background-position: center;
+  position: relative;
+  text-align: center;
+  overflow: hidden;
+}
+
+.stats-overlay {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background-color: rgba(0, 0, 0, 0.3); /* Overlay để làm nổi bật text */
+  z-index: 1;
+}
+
+.stats-content {
+  position: relative;
+  z-index: 2;
+  max-width: 1200px;
+  margin: 0 auto;
+  padding: 0 20px;
+}
+
+.stats-container {
+  display: flex;
+  justify-content: space-around;
+  flex-wrap: wrap;
+  gap: 40px;
+}
+
+/* Điều chỉnh CSS cho Stats Section - Căn chỉnh labels thẳng hàng */
+.stat-wrapper {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  margin-bottom: 15px;
+  height: 70px; /* Thêm chiều cao cố định để đảm bảo tất cả wrapper có cùng kích thước */
+}
+
+.stat-plus {
+  font-size: 3.5rem;
+  color: white;
+  font-weight: 700;
+  margin-left: 5px;
+  display: inline-block;
+}
+
+.stat-number {
+  font-size: 3.5rem;
+  color: white;
+  font-weight: 700;
+  display: inline-block;
+}
+
+.stat-item {
+  flex: 1;
+  min-width: 200px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  position: relative;
+}
+
+.stat-label {
+  font-size: 1.1rem;
+  color: #3949ab;
+  text-transform: uppercase;
+  letter-spacing: 1px;
+  text-align: center;
+}
+
+/* Footer Section - Cập nhật layout theo yêu cầu */
+.footer {
+  width: 100%;
+  background-color: #f5f5f5;
+  padding: 60px 0 20px;
+  position: relative;
+}
+
+.footer-content {
+  max-width: 1200px;
+  margin: 0 auto;
+  padding: 0 15px;
+}
+
+.footer-main {
+  display: flex;
+  justify-content: space-between;
+  flex-wrap: wrap;
+  gap: 40px;
+  margin-bottom: 40px;
+}
+
+/* Chia footer thành 2 phần chính: trái và phải */
+.footer-left {
+  flex: 0 0 45%;
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+}
+
+.footer-right {
+  flex: 0 0 45%;
+}
+
+.footer-logo {
+  margin-bottom: 25px;
+}
+
+.footer-logo img {
+  width: 120px;
+  height: auto;
+}
+
+.footer-contact {
+  display: flex;
+  flex-direction: column;
+  gap: 15px;
+}
+
+.footer-contact-item {
+  display: flex;
+  flex-direction: column;
+}
+
+.footer-label {
+  font-weight: 700;
+  color: #333;
+  margin-bottom: 5px;
+}
+
+.footer-info {
+  color: #666;
+  line-height: 1.5;
+}
+
+.footer-subscribe {
+  display: flex;
+  flex-direction: column;
+  gap: 20px;
+}
+
+.footer-subscribe-title {
+  font-size: 1rem;
+  color: #333;
+  font-weight: 500;
+  margin-bottom: 10px;
+}
+
+.footer-subscribe-form {
+  display: flex;
+  position: relative;
+}
+
+.footer-input {
+  width: 100%;
+  padding: 12px 15px;
+  border: 1px solid #ddd;
+  border-radius: 4px;
+  background-color: white;
+  font-size: 0.9rem;
+  color: #333;
+}
+
+.footer-submit {
+  position: absolute;
+  right: 5px;
+  top: 50%;
+  transform: translateY(-50%);
+  background: none;
+  border: none;
+  cursor: pointer;
+  padding: 5px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.footer-submit img {
+  width: 24px;
+  height: 24px;
+}
+
+.footer-social {
+  display: flex;
+  gap: 15px;
+  margin-top: 10px;
+}
+
+.social-icon {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  transition: transform 0.3s ease;
+}
+
+.social-icon img {
+  width: 24px;
+  height: 24px;
+}
+
+.social-icon:hover {
+  transform: translateY(-3px);
+}
+
+.footer-bottom {
+  border-top: 1px solid #ddd;
+  padding-top: 20px;
+  text-align: center;
+}
+
+.copyright {
+  color: #888;
+  font-size: 0.9rem;
+}
+
+/* Responsive adjustments */
+@media (max-width: 992px) {
+  .footer-main {
+    flex-direction: column;
+    align-items: center;
+  }
+
+  .footer-left,
+  .footer-right {
+    flex: 0 0 100%;
+    max-width: 600px;
+    align-items: center;
+    text-align: center;
+  }
+
+  .footer-contact-item {
+    align-items: center;
+  }
+
+  .footer-social {
+    justify-content: center;
+  }
+}
