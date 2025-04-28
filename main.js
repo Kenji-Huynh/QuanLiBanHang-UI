@@ -241,3 +241,128 @@ document.addEventListener("DOMContentLoaded", function () {
     }
   }
 });
+
+// Auto hover cho Feature 2
+document.addEventListener("DOMContentLoaded", function () {
+  const featureSocial = document.querySelector(".feature-social");
+  const feature1 = document.querySelector(".feature-card:first-child");
+  const feature3 = document.querySelector(".feature-cards-grid");
+
+  let currentHovered = null;
+  let hoveredByUser = false;
+
+  // Function để thêm class hovered
+  function addHoverClass(element) {
+    if (currentHovered) {
+      currentHovered.classList.remove("hovered");
+    }
+    element.classList.add("hovered");
+    currentHovered = element;
+  }
+
+  // Auto hover cho feature 2 khi load trang
+  setTimeout(() => {
+    if (!hoveredByUser) {
+      addHoverClass(featureSocial);
+    }
+  }, 1000);
+
+  // Xử lý hover bằng mouse
+  feature1.addEventListener("mouseenter", function () {
+    hoveredByUser = true;
+    addHoverClass(feature1);
+  });
+
+  featureSocial.addEventListener("mouseenter", function () {
+    hoveredByUser = true;
+    addHoverClass(featureSocial);
+  });
+
+  feature3.addEventListener("mouseenter", function () {
+    hoveredByUser = true;
+    addHoverClass(feature3);
+  });
+
+  // Xử lý khi mouse rời khỏi
+  feature1.addEventListener("mouseleave", function () {
+    hoveredByUser = false;
+    // Quay lại auto hover feature 2 sau khi mouse rời đi
+    setTimeout(() => {
+      if (!hoveredByUser && !document.querySelector(".hovered")) {
+        addHoverClass(featureSocial);
+      }
+    }, 200);
+  });
+
+  featureSocial.addEventListener("mouseleave", function () {
+    hoveredByUser = false;
+  });
+
+  feature3.addEventListener("mouseleave", function () {
+    hoveredByUser = false;
+    // Quay lại auto hover feature 2 sau khi mouse rời đi
+    setTimeout(() => {
+      if (!hoveredByUser && !document.querySelector(".hovered")) {
+        addHoverClass(featureSocial);
+      }
+    }, 200);
+  });
+
+  // Kiểm tra khi scroll để auto hover khi feature 2 vào viewport
+  window.addEventListener("scroll", function () {
+    if (!hoveredByUser) {
+      const featureSocialRect = featureSocial.getBoundingClientRect();
+      const windowHeight = window.innerHeight;
+
+      // Nếu feature 2 đang trong viewport
+      if (
+        featureSocialRect.top < windowHeight * 0.8 &&
+        featureSocialRect.bottom > windowHeight * 0.2
+      ) {
+        addHoverClass(featureSocial);
+      }
+    }
+  });
+});
+
+// Đảm bảo có sự kết nối giữa hover của feature3 và các card con
+document.addEventListener("DOMContentLoaded", function () {
+  const feature3 = document.querySelector(".feature-cards-grid");
+
+  // Khi feature3 được hover, thêm hiệu ứng animation cho các card con
+  if (feature3) {
+    // Kích hoạt animation staggered khi hover
+    feature3.addEventListener("mouseenter", function () {
+      // Các hiệu ứng đã được xử lý bằng CSS class .hovered
+    });
+
+    // Reset lại trạng thái animation khi không còn hover
+    feature3.addEventListener("mouseleave", function () {
+      // Các hiệu ứng đã được xử lý bằng CSS class .hovered
+    });
+  }
+
+  // Cập nhật lại hiệu ứng z-index cho các feature cards
+  const featureCards = document.querySelectorAll(
+    ".feature-card, .feature-social, .feature-cards-grid"
+  );
+
+  featureCards.forEach((card, index) => {
+    // Đặt z-index ban đầu
+    card.style.zIndex = featureCards.length - index;
+
+    // Xử lý mouseenter để đưa card lên trên cùng
+    card.addEventListener("mouseenter", function () {
+      // Đưa card này lên trên cùng
+      this.style.zIndex = 100;
+
+      // Đảm bảo các card khác có z-index thấp hơn
+      featureCards.forEach((otherCard) => {
+        if (otherCard !== this) {
+          otherCard.style.zIndex =
+            featureCards.length - Array.from(featureCards).indexOf(otherCard);
+        }
+      });
+    });
+  });
+});
