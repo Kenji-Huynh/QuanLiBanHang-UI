@@ -165,10 +165,17 @@ p {
 }
 
 .features-wrapper {
+  position: relative;
   display: flex;
   flex-direction: column;
   gap: 0;
   width: 100%;
+}
+
+/* Sử dụng một container riêng cho mỗi feature để quản lý overlap */
+.feature-container {
+  position: relative;
+  padding-bottom: 70px; /* Thêm padding-bottom để tạo khoảng cách giữa các feature */
 }
 
 .feature-card {
@@ -181,14 +188,118 @@ p {
   position: relative;
   padding: 0;
   min-height: 360px; /* Giảm từ 380px xuống 360px */
-  margin-bottom: -30px; /* Giảm từ -50px lên -30px */
+  margin-bottom: 0; /* Bỏ margin-bottom âm */
   width: 100%;
   box-shadow: 0 0 0 rgba(0, 0, 0, 0); /* Shadow ban đầu (không có) */
+  z-index: 3; /* Feature 1 có z-index cao nhất ban đầu */
 }
 
 .feature-card.hovered {
   box-shadow: 0 15px 15px -15px rgba(0, 0, 0, 0.5),
     0 -15px 15px -15px rgba(0, 0, 0, 0.5);
+  z-index: 10; /* Đảm bảo element đang hover luôn nằm trên cùng */
+}
+
+/* Animation cho Feature 1 và Feature 2 */
+
+/* Thiết lập ban đầu cho Feature 1 */
+.feature-card:first-child {
+  overflow: hidden;
+  padding-bottom: 0; /* Bỏ padding bottom mặc định */
+  transition: all 0.8s cubic-bezier(0.16, 1, 0.3, 1); /* Timing function smooth */
+  max-height: 360px; /* Chiều cao ban đầu */
+}
+
+.feature-card:first-child .feature-image {
+  transform-origin: top center;
+  transition: all 0.8s cubic-bezier(0.16, 1, 0.3, 1);
+}
+
+.feature-card:first-child .feature-content {
+  opacity: 0.9; /* Hơi mờ khi chưa hover */
+  transition: all 0.8s cubic-bezier(0.16, 1, 0.3, 1);
+  transform: translateY(30px); /* Đẩy lên khi chưa hover */
+}
+
+/* Feature 1 khi hover - Animation kéo từ bottom xuống */
+.feature-card:first-child.hovered {
+  max-height: 430px; /* Tăng chiều cao khi hover */
+  padding-bottom: 40px; /* Thêm padding khi hover */
+  box-shadow: 0 15px 15px -15px rgba(0, 0, 0, 0.2),
+    0 -15px 15px -15px rgba(0, 0, 0, 0.2);
+}
+
+.feature-card:first-child.hovered .feature-content {
+  opacity: 1;
+  transform: translateY(0); /* Trở về vị trí ban đầu */
+}
+
+.feature-card:first-child.hovered .feature-image {
+  max-height: 430px;
+}
+
+/* Thiết lập ban đầu cho Feature 2 */
+.feature-social {
+  overflow: hidden;
+  transition: all 0.8s cubic-bezier(0.16, 1, 0.3, 1);
+  position: relative;
+  max-height: 360px; /* Chiều cao ban đầu */
+  margin-top: 0; /* Bỏ margin-top âm */
+  z-index: 2; /* Feature 2 có z-index thấp hơn feature 1 */
+}
+
+.feature-social .feature-content {
+  opacity: 0.9;
+  transition: all 0.8s cubic-bezier(0.16, 1, 0.3, 1);
+  transform: translateX(-30px); /* Đẩy về trái khi chưa hover */
+}
+
+.feature-social .feature-image {
+  transition: all 0.8s cubic-bezier(0.16, 1, 0.3, 1);
+  transform: translateX(30px); /* Đẩy về phải khi chưa hover */
+  opacity: 0.9;
+}
+
+/* Feature 2 khi hover - Animation kéo ra 2 bên */
+.feature-social.hovered {
+  max-height: 430px;
+  box-shadow: 0 15px 15px -15px rgba(0, 0, 0, 0.2),
+    0 -15px 15px -15px rgba(0, 0, 0, 0.2);
+  z-index: 10; /* Đảm bảo element đang hover luôn nằm trên cùng */
+}
+
+.feature-social.hovered .feature-content {
+  opacity: 1;
+  transform: translateX(0);
+}
+
+.feature-social.hovered .feature-image {
+  max-height: 430px;
+  transform: translateX(0);
+  opacity: 1;
+}
+
+/* Hiệu ứng shadow mượt mà hơn cho cả 2 feature */
+.feature-card,
+.feature-social {
+  box-shadow: 0 0 0 rgba(0, 0, 0, 0);
+  transition: box-shadow 0.8s cubic-bezier(0.16, 1, 0.3, 1),
+    max-height 0.8s cubic-bezier(0.16, 1, 0.3, 1),
+    padding 0.8s cubic-bezier(0.16, 1, 0.3, 1);
+}
+
+/* Thêm hiệu ứng transition cho các thành phần con để mượt mà hơn */
+.feature-content p,
+.feature-title {
+  transition: opacity 0.8s cubic-bezier(0.16, 1, 0.3, 1);
+}
+
+/* Khi hover thì tăng độ rõ nét của text */
+.feature-card.hovered .feature-content p,
+.feature-card.hovered .feature-title,
+.feature-social.hovered .feature-content p,
+.feature-social.hovered .feature-title {
+  opacity: 1;
 }
 
 /* Cải thiện hiệu ứng hover cho feature image */
@@ -250,7 +361,6 @@ p {
 /* Feature 2 specific styling - social media feature */
 .feature-social {
   background-color: #f5f5f5; /* Thay đổi từ white sang #F5F5F5 */
-  margin-top: -70px; /* Tăng từ -100px lên -70px để giảm chồng lấp */
   justify-content: flex-start; /* Đẩy nội dung về phía trái */
 }
 
@@ -273,17 +383,54 @@ p {
 /* Feature 3 - Cards Grid */
 .feature-cards-grid {
   background-color: white;
-  margin-top: -70px; /* Đè lên feature 2 một chút */
   padding: 80px 0 60px;
   flex-direction: column !important;
   align-items: center;
   justify-content: center;
+  overflow: hidden;
+  transition: all 0.8s cubic-bezier(0.16, 1, 0.3, 1);
+  position: relative;
+  max-height: 360px; /* Chiều cao ban đầu */
+  margin-top: 0; /* Bỏ margin-top âm */
+  z-index: 1; /* Feature 3 có z-index thấp nhất ban đầu */
+}
+
+.feature-cards-grid .feature-title {
+  opacity: 0.9;
+  transition: all 0.8s cubic-bezier(0.16, 1, 0.3, 1);
+  transform: translateY(10px); /* Đẩy lên khi chưa hover */
 }
 
 .feature-grid-content {
   width: 100%;
   max-width: 1200px;
   padding: 0 15px;
+}
+
+.cards-wrapper {
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  gap: 20px;
+  opacity: 0.85;
+  transition: all 0.8s cubic-bezier(0.16, 1, 0.3, 1);
+  transform: scale(0.95); /* Thu nhỏ khi chưa hover */
+}
+
+.feature-cards-grid.hovered {
+  max-height: 430px;
+  box-shadow: 0 15px 15px -15px rgba(0, 0, 0, 0.2),
+    0 -15px 15px -15px rgba(0, 0, 0, 0.2);
+  z-index: 10; /* Đảm bảo element đang hover luôn nằm trên cùng */
+}
+
+.feature-cards-grid.hovered .feature-title {
+  opacity: 1;
+  transform: translateY(0); /* Trở về vị trí ban đầu */
+}
+
+.feature-cards-grid.hovered .cards-wrapper {
+  opacity: 1;
+  transform: scale(1); /* Phóng to về kích thước thật */
 }
 
 .cards-wrapper {
@@ -304,6 +451,33 @@ p {
   padding: 20px 15px;
   transition: transform 0.4s ease;
   cursor: pointer;
+  opacity: 0.9;
+  transform: translateY(10px);
+  transition: all 0.8s cubic-bezier(0.16, 1, 0.3, 1);
+}
+
+.feature-cards-grid.hovered .feature-small-card:nth-child(1) {
+  transition-delay: 0.1s;
+  opacity: 1;
+  transform: translateY(0);
+}
+
+.feature-cards-grid.hovered .feature-small-card:nth-child(2) {
+  transition-delay: 0.2s;
+  opacity: 1;
+  transform: translateY(0);
+}
+
+.feature-cards-grid.hovered .feature-small-card:nth-child(3) {
+  transition-delay: 0.3s;
+  opacity: 1;
+  transform: translateY(0);
+}
+
+.feature-cards-grid.hovered .feature-small-card:nth-child(4) {
+  transition-delay: 0.4s;
+  opacity: 1;
+  transform: translateY(0);
 }
 
 .feature-small-card:hover {
@@ -339,11 +513,24 @@ p {
   object-fit: contain;
 }
 
+/* Thiết lập ban đầu cho icon */
 .feature-icon {
   width: 50px;
   height: 50px;
   z-index: 2;
-  transition: transform var(--transition-expand) cubic-bezier(0.33, 1, 0.68, 1);
+  transition: transform 0.3s cubic-bezier(0.33, 1, 0.68, 1);
+}
+
+/* KHI HOVER VÀO TỪNG CARD NHỎ - icon sẽ xoay 720 độ */
+.feature-small-card:hover .feature-icon {
+  transform: rotate(720deg) !important;
+  transition: transform 1.2s cubic-bezier(0.34, 1.56, 0.64, 1) !important;
+}
+
+/* Hiệu ứng cho icon background khi hover vào card nhỏ */
+.feature-small-card:hover .icon-background {
+  opacity: 1;
+  transition: opacity 0.8s ease;
 }
 
 /* Description styling */
@@ -358,14 +545,6 @@ p {
 }
 
 /* Hover effects */
-.feature-small-card:hover .feature-icon {
-  transform: rotate(720deg); /* 2 vòng = 720 độ */
-}
-
-.feature-small-card:hover .icon-background {
-  opacity: 1;
-}
-
 .feature-small-card:hover .card-description p {
   font-weight: 500;
   color: var(--dark-text);
@@ -510,7 +689,7 @@ p {
   padding: 0 15px;
   display: flex;
   flex-direction: row;
-  align-items: flex-start;
+  align-items: center;
   gap: 40px;
 }
 
@@ -522,23 +701,34 @@ p {
 .portfolio-title {
   font-size: 2.5rem;
   color: var(--primary-color);
-  text-align: left;
+  text-align: center;
   margin-bottom: 20px;
   font-family: "Crimson Text", serif;
+  font-weight: lighter;
 }
 
 /* Accent line */
-.accent-line {
+/* .accent-line {
   width: 50px;
   height: 3px;
   background-color: var(--primary-color);
   margin-bottom: 25px;
-}
+} */
 
 .portfolio-description {
-  color: var(--dark-text);
+  color: #777777;
   line-height: 1.7;
   text-align: left;
+  margin-bottom: 30px; /* Thêm khoảng cách dưới description */
+}
+
+/* Accent line - Kích hoạt lại và cập nhật style */
+.accent-line {
+  width: 40%; /* Chiều rộng 100% thay vì 50px */
+  height: 1px; /* Giảm độ dày từ 3px xuống 1px */
+  background-color: #d9d9d9; /* Thay đổi màu thành #D9D9D9 */
+  margin: 25px auto 40px; /* Thêm margin trên dưới để tạo khoảng cách */
+  display: block; /* Đảm bảo hiển thị */
 }
 
 .portfolio-right {
@@ -634,23 +824,21 @@ p {
   z-index: 2;
   max-width: 800px;
   margin: 0 auto;
-  padding: 0 20px;
 }
 
 .cta-title {
-  font-size: 2.8rem;
+  font-size: 2.5rem;
   color: var(--primary-color);
-  margin-bottom: 30px;
   font-family: "Crimson Text", serif;
   text-align: center;
   font-weight: lighter;
+  line-height: 1.2; /* Thêm thuộc tính này để giảm khoảng cách giữa các dòng */
 }
 
 .cta-description {
   font-size: 1.1rem;
   color: #777777;
-  margin-bottom: 50px;
-  line-height: 1.7;
+  margin-bottom: 30px;
 }
 
 /* Button container with animated line */
@@ -779,7 +967,7 @@ p {
 
 .stat-label {
   font-size: 1.1rem;
-  color: #3949ab;
+  color: white;
   text-transform: uppercase;
   letter-spacing: 1px;
   text-align: center;
